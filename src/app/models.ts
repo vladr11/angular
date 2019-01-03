@@ -49,3 +49,51 @@ export class Product {
     this.image = newObj && newObj.image ? newObj.image : null;
   }
 }
+
+export class Order {
+  id: string;
+  user: string;
+  date: string;
+  total: string;
+
+  constructor(newObj?: any) {
+    this.id = newObj && newObj.id ? newObj.id : null;
+    this.user = newObj && newObj.user ? newObj.user : null;
+    this.date = newObj && newObj.date ? newObj.date : null;
+    this.total = newObj && newObj.total ? newObj.total : null;
+  }
+}
+
+export class OrderItem {
+  id?: string;
+  product: Product;
+  quantity: number;
+
+  constructor(newObj?: any) {
+    this.id = newObj && newObj.id ? newObj.id : null;
+    this.product = newObj && newObj.product ? new Product(newObj.product) : new Product();
+    this.quantity = newObj && newObj.quantity ? newObj.quantity : null;
+  }
+}
+
+export class Cart {
+  id?: string;
+  user: string;
+
+  constructor(newObj?: any) {
+    this.id = newObj && newObj.id ? newObj.id : null;
+    this.user = newObj && newObj.user ? newObj.user : null;
+  }
+}
+
+export class CartItem {
+  id?: string;
+  product: Product;
+  quantity: number;
+
+  constructor(newObj?: any) {
+    this.id = newObj && newObj.id ? newObj.id : null;
+    this.product = newObj && newObj.product ? new Product(newObj.product) : new Product();
+    this.quantity = newObj && newObj.quantity ? newObj.quantity : null;
+  }
+}
