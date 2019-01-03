@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 export class LoginComponent {
   username: string;
   password: string;
-  showErrors: boolean;
+  showsErrors: boolean;
 
   constructor(private router: Router) {
   }
@@ -29,6 +29,6 @@ export class LoginComponent {
   }
 
   private showErrors() {
-    this.showErrors = true;
+    this.showsErrors = true;
   }
 }
