@@ -1,0 +1,25 @@
+#page {
+  justify-content: center;
+  padding-top: calc(50vh - 200px);
+}
+
+form {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  width: 400px;
+}
+
+input {
+  height: 40px;
+  width: 100%;
+}
+
+button {
+  height: 40px;
+  width: 100%;
+}
+
+.error-text {
+  margin-top: 20px;
+}
