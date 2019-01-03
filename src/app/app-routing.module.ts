@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
+import {NgModule} from '@angular/core';
+import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
 
 const routes: Routes = [
   {
@@ -9,9 +9,18 @@ const routes: Routes = [
   }, {
     path: 'login',
     loadChildren: './login/login.module#LoginModule'
-  },{
+  }, {
     path: 'users',
     loadChildren: './users/users.module#UsersModule'
+  }, {
+    path: 'user-edit',
+    loadChildren: './users/users.module#UsersModule'
+  }, {
+    path: 'products',
+    loadChildren: './products/products.module#ProductsModule'
+  }, {
+    path: 'product-edit',
+    loadChildren: './product-edit/product-edit.module#ProductEditModule'
   },
 ];
 
