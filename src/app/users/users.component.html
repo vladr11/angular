@@ -1,4 +1,16 @@
 <div id="page">
   <div class="title">USERS</div>
-  <table></table>
+
+    <div class="table">
+      <div class="header-row row">
+        <div class="header-cell cell" *ngFor="let column of tableColumns" [ngClass]="column">
+          {{column}}
+        </div>
+      </div>
+      <div class="table-row row" *ngFor="let user of usersList">
+        <div class="table-cell cell" *ngFor="let column of tableColumns" [ngClass]="column">
+          {{user[column]}}
+        </div>
+      </div>
+    </div>
 </div>
