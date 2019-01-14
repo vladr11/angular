@@ -1,3 +1,24 @@
-<p>
-  products works!
-</p>
+<div id="page">
+  <div class="title">PRODUCTS</div>
+
+  <button class="add_button" (click)="add()">Add</button>
+  <div class="table">
+    <div class="header-row row">
+      <div class="header-cell cell" *ngFor="let column of tableColumns" [ngClass]="column">
+        {{column}}
+      </div>
+    </div>
+    <div class="table-row row" *ngFor="let product of productsList">
+      <div class="table-cell cell" *ngFor="let column of tableColumns" [ngClass]="column">
+        <ng-container [ngSwitch]="column">
+          <div *ngSwitchCase="'Edit'"><button (click)="edit(product)">Edit</button> </div>
+          <div *ngSwitchCase="'Delete'"><button (click)="delete(product)">Delete</button> </div>
+          <div *ngSwitchCase="'type'">{{product[column].type}}</div>
+          <img *ngSwitchCase="'image'" src="{{product[column]}}">
+          <div *ngSwitchDefault>{{product[column]}}</div>
+        </ng-container>
+
+      </div>
+    </div>
+  </div>
+</div>

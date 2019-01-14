@@ -1,3 +1,25 @@
-<p>
-  product-edit works!
-</p>
+<div id="page">
+  <div class="title" *ngIf="isEdit">Edit Product</div>
+  <div class="title" *ngIf="!isEdit">Add Product</div>
+
+  <div>
+    <form (submit)="isEdit ? editProduct() : addProduct()">
+      <input [(ngModel)]="product.name" name="name" placeholder="Name">
+      <input [(ngModel)]="product.description" name="description" placeholder="Description">
+      <input [(ngModel)]="product.company" name="company" placeholder="Company">
+      <select name="type" (change)="selectedType($event.target.value)">
+        <option *ngFor="let type of typesList"
+                [value]="type.id"
+                [selected]="type.id === product.type.id"
+                (click)="selectedType(type)">
+          {{type.type}}
+        </option>
+      </select>
+      <input [(ngModel)]="product.quantity" type="number" name="quantity" placeholder="Quantity">
+      <input [(ngModel)]="product.price" type="number" name="price" placeholder="Price">
+      <input [(ngModel)]="product.image" name="image" placeholder="Image URL">
+      <button type="submit" *ngIf="isEdit">Update</button>
+      <button type="submit" *ngIf="!isEdit">Add</button>
+    </form>
+  </div>
+</div>
