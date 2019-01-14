@@ -80,8 +80,8 @@ export class NetworkingService {
       .pipe(map(data => data['orders']));
   }
 
-  addOrder(order: Order): Observable<Order> {
-    return this.http.post<Order>(`${this.baseUrl}${this.ordersEndpoint}`, order, this.defaultOptions);
+  addOrder(cart: Array<any>): Observable<Order> {
+    return this.http.post<Order>(`${this.baseUrl}${this.ordersEndpoint}`, cart, this.defaultOptions);
   }
 
   updateOrder(order: Order): Observable<any> {

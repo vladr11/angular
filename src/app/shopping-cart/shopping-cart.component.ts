@@ -13,7 +13,7 @@ export class ShoppingCartComponent implements OnInit {
   productsList: Product[] = [];
   productDetailInView: Product;
   cartList: CartItem[] = [];
-  cartIsVisible: boolean = true;
+  cartIsVisible: boolean;
 
   constructor(private router: Router, private networking: NetworkingService) {
     this.hideCart = this.hideCart.bind(this);
@@ -24,8 +24,8 @@ export class ShoppingCartComponent implements OnInit {
       .subscribe(products => this.productsList = products);
   }
 
-  productClicked(product) {
-    this.productDetailInView = product;
+  openProductDetails(productId: number) {
+    this.productDetailInView = this.productsList[_.findIndex(this.productsList, {id: productId})];
   }
 
   exitDetailView() {
@@ -41,22 +41,64 @@ export class ShoppingCartComponent implements OnInit {
 
   hideCart() {
     this.cartIsVisible = false;
-    window.removeEventListener('click', this.hideCart);
+    window.setTimeout(() => {
+      window.removeEventListener('click', this.hideCart);
+    });
   }
 
   stopThePropagation() {
     event.stopPropagation();
   }
 
-  addItemToCart(item: Product) {
-    const foundItem = this.cartList[_.indexOf(this.cartList, {id: item.id})];
+  addItemToCart(item: Product | CartItem) {
+    this.exitDetailView();
+    const foundItem = this.cartList[_.findIndex(this.cartList, {id: item.id})];
     if (!foundItem) {
-      console.log(new CartItem(item));
       this.cartList.push(new CartItem(item));
     }
-    console.log(foundItem);
-  }
-  removeItemFromCart(itemId: number) {
+    else {
+      foundItem.amount++;
+    }
 
+    this.saveToLocalStorage();
+  }
+
+  removeItemFromCart(item: Product | CartItem) {
+    const foundItem = this.cartList[_.findIndex(this.cartList, {id: item.id})];
+    if (foundItem.amount > 1) {
+      foundItem.amount--;
+    }
+    else {
+      this.cartList.splice(_.findIndex(this.cartList, {id: item.id}), 1);
+    }
+    this.saveToLocalStorage();
+  }
+
+  getTotalPrice() {
+    let totalPrice = 0;
+    for (let i = 0; i < this.cartList.length; i++) {
+      totalPrice += this.cartList[i].amount * this.cartList[i].price;
+    }
+    return totalPrice;
+  }
+
+  private saveToLocalStorage() {
+    console.log(this.cartList);
+  }
+
+  placeOrder() {
+    const cartForServer = [];
+    for (let i = 0; i < this.cartList.length; i++) {
+      cartForServer.push({
+        id: this.cartList[i].id,
+        quantity: this.cartList[i].amount
+      })
+    }
+
+    this.networking.addOrder(cartForServer).subscribe(() => {
+      console.log('It is work')
+    }, () => {
+      console.log('It no work')
+    });
   }
 }

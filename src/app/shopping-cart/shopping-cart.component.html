@@ -5,7 +5,7 @@
 <div id="page">
 
   <div id="articles-container" *ngIf="!productDetailInView">
-    <div *ngFor="let product of productsList" class="article" (click)="productClicked(product)">
+    <div *ngFor="let product of productsList" class="article" (click)="openProductDetails(product.id)">
       <div class="image" [ngStyle]="{'background-image': 'url(' + product.image + ')'}"></div>
       <div class="name">{{product.name}}</div>
       <div class="description">{{product.description}}</div>
@@ -30,13 +30,7 @@
         {{productDetailInView.description}}
       </div>
       <div class="buttons-wrapper">
-        <button class="modify-cart-button detail-minus" (click)="removeItemFromCart(productDetailInView)">
-          <div>-</div>
-        </button>
-        <span class="total-price"></span>
-        <button class="modify-cart-button detail-plus" (click)="addItemToCart(productDetailInView)">
-          <div>+</div>
-        </button>
+        <button class="add-to-cart-button" (click)="addItemToCart(productDetailInView)">ADD TO CART</button>
       </div>
     </div>
   </div>
@@ -44,39 +38,24 @@
     <div class="show-cart-button" (click)="hideCart()">My Cart</div>
 
     <div class="cart-items">
-      <div class="cart-item">
-        <div class="name">Product name</div>
-
-        <div class="unit-price">per unit: 12 $</div>
-        <div class="total-price">24 $</div>
-        <div class="modify-cart-wrapper">
-          <div class="modify-cart-button">
-            <div>-</div>
-          </div>
-          <div class="number-of-items">2</div>
-          <div class="modify-cart-button">
-            <div>+</div>
-          </div>
-        </div>
-
-      </div>
 
       <div *ngFor="let item of cartList" class="cart-item">
-        <div class="name">{{item.name}}</div>
+        <div class="name"  (click)="openProductDetails(item.id)">{{item.name}}</div>
 
         <div class="unit-price">per unit: {{item.price}} $</div>
         <div class="total-price">{{item.price * item.amount}} $</div>
         <div class="modify-cart-wrapper">
-          <div class="modify-cart-button">
+          <div class="modify-cart-button" (click)="removeItemFromCart(item)">
             <div>-</div>
           </div>
           <div class="number-of-items">{{item.amount}}</div>
-          <div class="modify-cart-button">
+          <div class="modify-cart-button" (click)="addItemToCart(item)">
             <div>+</div>
           </div>
         </div>
       </div>
-      <div class="cart-total-price">TOTAL: 123 $</div>
+      <div class="cart-total-price" *ngIf="cartList.length">TOTAL: <span>{{getTotalPrice()}} $</span></div>
+      <button class="order-button" *ngIf="cartList.length" (click)="placeOrder()">PLACE ORDER</button>
 
     </div>
   </div>
