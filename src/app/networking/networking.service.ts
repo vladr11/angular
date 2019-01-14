@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import {Order, Product, ProductType, User} from '../models';
 import {catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +19,19 @@ export class NetworkingService {
   private cartEndpoint = '/cart';
   private loginEndpoint = '/login';
   private defaultOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+    withCredentials: true,
   };
 
   private sessionId: string;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService
   ) { }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.baseUrl}${this.usersEndpoint}`)
+    return this.http.get<User[]>(`${this.baseUrl}${this.usersEndpoint}`, this.defaultOptions)
       .pipe(map(data => data['users']));
   }
 
@@ -49,7 +52,7 @@ export class NetworkingService {
   }
 
   getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(`${this.baseUrl}${this.productsEndpoint}`)
+    return this.http.get<Product[]>(`${this.baseUrl}${this.productsEndpoint}`, this.defaultOptions)
       .pipe(map(data => data['products']));
   }
 
@@ -76,7 +79,7 @@ export class NetworkingService {
   }
 
   getOrders(): Observable<Order[]> {
-    return this.http.get<Order[]>(`${this.baseUrl}${this.ordersEndpoint}`)
+    return this.http.get<Order[]>(`${this.baseUrl}${this.ordersEndpoint}`, this.defaultOptions)
       .pipe(map(data => data['orders']));
   }
 
@@ -104,25 +107,27 @@ export class NetworkingService {
     const service = this;
 
     const options = {
-      headers: headers,
+      headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'}),
       observe: 'response',
-      responseType: 'text',
+      // withCredentials: true,
     };
 
     return this.http.post(
       url,
       `username=${username}&password=${password}`,
-      //options
+      options
     )
       .pipe(
-        map(response => response),// {
-        //   const cookieHeader = response.headers.get('Set-Cookie');
-        //   const sessionId = cookieHeader.split('=')[1];
-        //   service.sessionId = sessionId;
-        //   console.log(`${sessionId}`);
-        //   console.log(`${response}`);
-        //   return of({'role': 'dummy'});
-        // }),
+        map(response =>  {
+          const cookieHeader = response.headers.get('Set-Cookie');
+          // const sessionId = cookieHeader.split('=')[1];
+          // service.sessionId = sessionId;
+          // console.log(`${sessionId}`);
+          // console.log(`${response}`);
+          console.log(response);
+          console.log(this.cookieService.getAll());
+          return response.body.role;
+        }),
         // catchError(err => console.log(`${err}`))
         // map(data => data.role)
       );

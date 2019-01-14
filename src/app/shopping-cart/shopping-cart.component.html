@@ -12,7 +12,7 @@
     crossorigin="anonymous"></script>
   <div id="articles-container">
     <div *ngFor="let product of productsList" class="article" id="article-{{product.id}}">
-      <div class="image" [style.background-image]="getImage(product)"></div>
+      <div class="image" [ngStyle]="{'background-image': 'url(' + product.image + ')'}"></div>
       <div class="name">{{product.name}}</div>
       <div class="description">{{product.description}}</div>
       <div class="price">{{product.price}} $</div>

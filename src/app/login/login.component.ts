@@ -24,10 +24,6 @@ export class LoginComponent {
     const component = this;
 
     this.networking.login(this.username, this.password)
-      .pipe(catchError(error => {
-        this.showError(error.error.message)
-        return '{"role":"invalid"}';
-      }))
       .subscribe(function (role: string) {
         if (role === 'administrator') {
           console.log('We have an admin');
@@ -37,7 +33,7 @@ export class LoginComponent {
           component.router.navigate(['/products']);
         } else if (role === 'customer') {
           console.log('We have a customer');
-          component.router.navigate(['/products']);
+          component.router.navigate(['/shopping-cart']);
         } else {
           console.log(`Not so good: ${role}`);
         }
