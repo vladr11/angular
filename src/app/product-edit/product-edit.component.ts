@@ -34,6 +34,7 @@ export class ProductEditComponent implements OnInit {
   }
 
   selectedType(typeId: string) {
+    console.log(this.typesList[0].id)
     this.product.type = this.typesList.find(element => element.id === +typeId);
   }
 

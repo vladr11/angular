@@ -10,7 +10,7 @@ import { of } from 'rxjs';
 })
 export class NetworkingService {
 
-  private baseUrl = 'http://localhost:8080';
+  private baseUrl = 'http://380ec660.ngrok.io';
   private usersEndpoint = '/users';
   private productsEndpoint = '/products';
   private typesEndpoint = '/types';

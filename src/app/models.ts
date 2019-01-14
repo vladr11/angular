@@ -21,7 +21,7 @@ export class User {
 }
 
 export class ProductType {
-  id: string;
+  id: number;
   type: string;
 
   constructor(newObj?: any) {
@@ -52,6 +52,20 @@ export class Product {
     this.quantity = newObj && newObj.quantity ? newObj.quantity : null;
     this.price = newObj && newObj.price ? newObj.price : null;
     this.image = newObj && newObj.image ? newObj.image : null;
+  }
+}
+
+export class CartItem {
+  id: string;
+  name: string;
+  price: number;
+  amount: number = 1;
+
+  constructor(newObj?: any) {
+    this.id = newObj && newObj.id ? newObj.id : null;
+    this.name = newObj && newObj.name ? newObj.name : null;
+    this.price = newObj && newObj.price ? newObj.price : null;
+    this.amount = newObj && newObj.amount ? newObj.amount : 1;
   }
 }
 
@@ -91,14 +105,3 @@ export class Cart {
   }
 }
 
-export class CartItem {
-  id?: string;
-  product: Product;
-  quantity: number;
-
-  constructor(newObj?: any) {
-    this.id = newObj && newObj.id ? newObj.id : null;
-    this.product = newObj && newObj.product ? new Product(newObj.product) : new Product();
-    this.quantity = newObj && newObj.quantity ? newObj.quantity : null;
-  }
-}
