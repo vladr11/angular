@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes, RouterModule, PreloadAllModules} from '@angular/router';
+import {ShoppingCartModule} from './shopping-cart/shopping-cart.module';
 
 const routes: Routes = [
   {
@@ -13,14 +14,17 @@ const routes: Routes = [
     path: 'users',
     loadChildren: './users/users.module#UsersModule'
   }, {
-    path: 'user-edit',
-    loadChildren: './users/users.module#UsersModule'
+    path: 'user-form',
+    loadChildren: './user-edit/user-edit.module#UserEditModule'
   }, {
     path: 'products',
     loadChildren: './products/products.module#ProductsModule'
   }, {
     path: 'product-edit',
     loadChildren: './product-edit/product-edit.module#ProductEditModule'
+  }, {
+    path: 'shopping-cart',
+    loadChildren: './shopping-cart/shopping-cart.module#ShoppingCartModule'
   },
 ];
 

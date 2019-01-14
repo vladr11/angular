@@ -8,6 +8,7 @@ export class User {
   email: string;
   address: string;
   role: string;
+  password: string;
 
   constructor(newObj?: any) {
     this.id = newObj && newObj.id ? newObj.id : null;
@@ -26,6 +27,10 @@ export class ProductType {
   constructor(newObj?: any) {
     this.id = newObj && newObj.id ? newObj.id : null;
     this.type = newObj && newObj.type ? newObj.type : null;
+  }
+
+  public toString(): string {
+    return this.type;
   }
 }
 
