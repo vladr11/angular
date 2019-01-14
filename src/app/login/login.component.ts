@@ -21,21 +21,19 @@ export class LoginComponent {
     console.log(this.username);
     console.log(this.password);
 
-    const component = this;
-
     this.networking.login(this.username, this.password)
-      .subscribe(function (role: string) {
+      .subscribe((role: string) => {
         if (role === 'administrator') {
           console.log('We have an admin');
-          component.router.navigate(['/users']);
+          this.router.navigate(['/users']);
         } else if (role === 'employee') {
           console.log('We have an employee');
-          component.router.navigate(['/products']);
+          this.router.navigate(['/products']);
         } else if (role === 'customer') {
           console.log('We have a customer');
-          component.router.navigate(['/shopping-cart']);
+          this.router.navigate(['/shopping-cart']);
         } else {
-          console.log(`Not so good: ${role}`);
+          this.showError('Something went wrong');
         }
       });
   }
