@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Product, User} from '../models';
+import {Cart, Product, User} from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -27,5 +27,13 @@ export class DataService {
     const product = this.storage;
     this.storage = null;
     return product;
+  }
+
+  setCart(cart: Cart) {
+    window.localStorage.setItem('cart', cart);
+  }
+
+  getCart(): Cart {
+    return JSON.parse(window.localStorage.getItem('cart'));
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
-import {Order, Product, ProductType, User} from '../models';
+import {CartItem, Order, Product, ProductType, User} from '../models';
 import {catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
