@@ -23,6 +23,7 @@
 #header #title {
   font-size: 41px;
   position: absolute;
+  float: top;
   left: 50%;
   transform: translateX(-50%);
 }

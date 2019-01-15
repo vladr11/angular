@@ -3,15 +3,13 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import {CartItem, Order, Product, ProductType, User} from '../models';
 import {catchError, map } from 'rxjs/operators';
-import { of } from 'rxjs';
-import {CookieService} from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NetworkingService {
 
-  private baseUrl = 'http://380ec660.ngrok.io';
+  private baseUrl = 'http://localhost:8080';
   private usersEndpoint = '/users';
   private productsEndpoint = '/products';
   private typesEndpoint = '/types';
@@ -27,7 +25,6 @@ export class NetworkingService {
 
   constructor(
     private http: HttpClient,
-    private cookieService: CookieService
   ) { }
 
   getUsers(): Observable<User[]> {
@@ -108,8 +105,7 @@ export class NetworkingService {
 
     const options = {
       headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'}),
-      observe: 'response',
-      // withCredentials: true,
+      withCredentials: true,
     };
 
     return this.http.post(
@@ -118,18 +114,9 @@ export class NetworkingService {
       options
     )
       .pipe(
-        map(response =>  {
-          const cookieHeader = response.headers.get('Set-Cookie');
-          // const sessionId = cookieHeader.split('=')[1];
-          // service.sessionId = sessionId;
-          // console.log(`${sessionId}`);
-          // console.log(`${response}`);
-          console.log(response);
-          console.log(this.cookieService.getAll());
-          return response.body.role;
+        map(data =>  {
+          return data.role;
         }),
-        // catchError(err => console.log(`${err}`))
-        // map(data => data.role)
       );
   }
 

@@ -96,9 +96,9 @@ export class ShoppingCartComponent implements OnInit {
     }
 
     this.networking.addOrder(cartForServer).subscribe(() => {
-      console.log('It is work');
+      this.hideCart();
     }, () => {
-      console.log('It no work');
+      alert('Could not place order');
     });
   }
 }
