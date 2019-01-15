@@ -92,13 +92,13 @@ export class ShoppingCartComponent implements OnInit {
       cartForServer.push({
         id: this.cartList[i].id,
         quantity: this.cartList[i].amount
-      })
+      });
     }
 
     this.networking.addOrder(cartForServer).subscribe(() => {
-      console.log('It is work')
+      console.log('It is work');
     }, () => {
-      console.log('It no work')
+      console.log('It no work');
     });
   }
 }
